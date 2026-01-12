@@ -1,8 +1,6 @@
 import Image from "next/image";
+import { fetchBreedImages } from "@/utils/dogapi";
 
-type BreedResponse = {
-  message: string[];
-}
 
 type Props = {
   params: Promise<{ breed: string }>;
@@ -11,8 +9,7 @@ type Props = {
 export default async function BreedPage(props: Props) {
   const { breed } = await props.params;
 
-  const response = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
-  const data = await response.json() as BreedResponse;
+  const data = await fetchBreedImages(breed);
 
   return (
     <div>
