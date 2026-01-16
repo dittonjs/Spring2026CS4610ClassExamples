@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  /* USU Brand Colors */
+  --usu-primary: #003366;
+  --usu-primary-dark: #002244;
+  --usu-primary-light: #004488;
+  --usu-secondary: #4A90E2;
+  --usu-secondary-dark: #357ABD;
+  --usu-secondary-light: #6BA3F0;
+
+  /* Light Mode Text Colors */
+  --usu-text-dark: #171717;
+  --usu-text-light: #ffffff;
+  --usu-text-gray: #4a5568;
+  --usu-text-gray-light: #718096;
+
+  /* Light Mode Background Colors */
+  --usu-bg-white: #ffffff;
+  --usu-bg-light: #f9fafb;
+  --usu-bg-gray: #f7fafc;
+
+  /* Dark Mode Colors - USU themed */
+  --usu-dark-bg: #0a1629;
+  --usu-dark-bg-secondary: #0f1e3a;
+  --usu-dark-bg-tertiary: #152540;
+  --usu-dark-text: #e2e8f0;
+  --usu-dark-text-gray: #a0aec0;
+  --usu-dark-border: #1e3a5f;
+
+  /* Legacy variables for compatibility */
+  --background: var(--usu-bg-white);
+  --foreground: var(--usu-text-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: var(--usu-dark-bg);
+    --foreground: var(--usu-dark-text);
+  }
+}
+
+@theme inline {
+  /* USU Color Palette */
+  --color-usu-primary: var(--usu-primary);
+  --color-usu-primary-dark: var(--usu-primary-dark);
+  --color-usu-primary-light: var(--usu-primary-light);
+  --color-usu-secondary: var(--usu-secondary);
+  --color-usu-secondary-dark: var(--usu-secondary-dark);
+  --color-usu-secondary-light: var(--usu-secondary-light);
+
+  /* Light Mode Text Colors */
+  --color-usu-text-dark: var(--usu-text-dark);
+  --color-usu-text-light: var(--usu-text-light);
+  --color-usu-text-gray: var(--usu-text-gray);
+  --color-usu-text-gray-light: var(--usu-text-gray-light);
+
+  /* Light Mode Background Colors */
+  --color-usu-bg-white: var(--usu-bg-white);
+  --color-usu-bg-light: var(--usu-bg-light);
+  --color-usu-bg-gray: var(--usu-bg-gray);
+
+  /* Dark Mode Colors */
+  --color-usu-dark-bg: var(--usu-dark-bg);
+  --color-usu-dark-bg-secondary: var(--usu-dark-bg-secondary);
+  --color-usu-dark-bg-tertiary: var(--usu-dark-bg-tertiary);
+  --color-usu-dark-text: var(--usu-dark-text);
+  --color-usu-dark-text-gray: var(--usu-dark-text-gray);
+  --color-usu-dark-border: var(--usu-dark-border);
+
+  /* Legacy colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--usu-bg-white);
+  color: var(--usu-text-dark);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: var(--usu-dark-bg);
+    color: var(--usu-dark-text);
+  }
+}
