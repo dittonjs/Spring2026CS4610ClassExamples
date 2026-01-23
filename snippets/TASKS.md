@@ -48,3 +48,25 @@ For each component/feature, follow TDD: Write tests first, then implement.
 - [x] **Apply USU theme to snippet page** - Update `app/s/[language]/[base64]/page.tsx` with USU colors
 - [x] **Apply USU theme to components** - Update all components (CodeBlock, CopyButton, EmbedCode) with USU colors
 - [x] **Test theme consistency** - Verify USU theme is applied consistently across all pages and components
+
+### Dynamic Iframe Height Calculation
+
+- [x] **Write utility function tests** - Create `__tests__/utils/iframeHeight.test.ts` for height calculation based on line count
+- [x] **Implement iframe height utility** - Create `app/_utils/iframeHeight.ts` with function to calculate height from line count
+- [x] **Update EmbedCode component tests** - Update `__tests__/components/EmbedCode.test.tsx` to test dynamic height calculation
+- [x] **Update EmbedCode component** - Modify `app/components/EmbedCode.tsx` to accept code and use calculated height
+- [x] **Update snippet page** - Modify `app/s/[language]/[base64]/page.tsx` to pass code to EmbedCode component
+
+### Custom Shiki Themes - USU Brand Colors
+
+- [x] **Create USU light theme JSON** - Create `app/themes/usu-light.json` with light theme matching USU brand colors
+- [x] **Create USU dark theme JSON** - Create `app/themes/usu-dark.json` with dark theme matching USU brand colors
+- [x] **Create theme loading utility** - Create `app/_utils/themes.ts` to load custom themes for shiki
+- [x] **Update CodeBlock component** - Modify `app/components/CodeBlock.tsx` to accept theme prop and load custom themes
+- [x] **Create ThemeToggle component** - Create `app/components/ThemeToggle.tsx` as Client Component with light/dark switch
+- [x] **Write ThemeToggle tests** - Create `__tests__/components/ThemeToggle.test.tsx` for theme toggle functionality
+- [x] **Update snippet page for theme support** - Modify `app/s/[language]/[base64]/page.tsx` to accept theme query param and pass to CodeBlock
+- [x] **Add ThemeToggle to snippet page** - Add ThemeToggle component to snippet page (not in embed mode)
+- [x] **Update EmbedCode to include theme in URL** - Modify `app/components/EmbedCode.tsx` to include theme query parameter in generated iframe code
+- [x] **Write theme utility tests** - Create `__tests__/utils/themes.test.ts` for theme loading functionality
+- [x] **Update CodeBlock tests** - Update `__tests__/components/CodeBlock.test.tsx` to test custom theme loading

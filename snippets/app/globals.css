@@ -4,6 +4,7 @@
   /* USU Brand Colors */
   --usu-primary: #003366;
   --usu-primary-dark: #002244;
+  --usu-primary-extra-dark: #0a1629;
   --usu-primary-light: #004488;
   --usu-secondary: #4A90E2;
   --usu-secondary-dark: #357ABD;
@@ -17,6 +18,7 @@
 
   /* Light Mode Background Colors */
   --usu-bg-white: #ffffff;
+  --usu-bg-soft: #f7f3ea;
   --usu-bg-light: #f9fafb;
   --usu-bg-gray: #f7fafc;
 
@@ -33,12 +35,8 @@
   --foreground: var(--usu-text-dark);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: var(--usu-dark-bg);
-    --foreground: var(--usu-dark-text);
-  }
-}
+@custom-variant dark (&:where(.dark, .dark *));
+
 
 @theme inline {
   /* USU Color Palette */
@@ -57,6 +55,7 @@
 
   /* Light Mode Background Colors */
   --color-usu-bg-white: var(--usu-bg-white);
+  --color-usu-bg-soft: var(--usu-bg-soft);
   --color-usu-bg-light: var(--usu-bg-light);
   --color-usu-bg-gray: var(--usu-bg-gray);
 
@@ -64,6 +63,7 @@
   --color-usu-dark-bg: var(--usu-dark-bg);
   --color-usu-dark-bg-secondary: var(--usu-dark-bg-secondary);
   --color-usu-dark-bg-tertiary: var(--usu-dark-bg-tertiary);
+  --color-usu-dark-bg-extra-dark: var(--usu-primary-extra-dark);
   --color-usu-dark-text: var(--usu-dark-text);
   --color-usu-dark-text-gray: var(--usu-dark-text-gray);
   --color-usu-dark-border: var(--usu-dark-border);
@@ -81,11 +81,22 @@ body {
   background: var(--usu-bg-white);
   color: var(--usu-text-dark);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background: var(--usu-dark-bg);
-    color: var(--usu-dark-text);
-  }
+/* Code block styling for horizontal scrolling */
+.code-block {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.code-block pre {
+  overflow-x: auto;
+  margin: 0;
+}
+
+.code-block code {
+  display: block;
+  overflow-x: auto;
+  white-space: pre;
 }

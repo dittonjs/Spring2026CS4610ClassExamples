@@ -11,7 +11,19 @@ const mockHighlighter = {
 };
 
 jest.mock('shiki', () => ({
-  getHighlighter: jest.fn(() => Promise.resolve(mockHighlighter)),
+  createHighlighter: jest.fn(() => Promise.resolve(mockHighlighter)),
+}));
+
+// Mock theme utilities
+jest.mock('@/app/_utils/themes', () => ({
+  loadTheme: jest.fn((themeName: string) => ({
+    name: themeName,
+    type: themeName === 'usu-light' ? 'light' : 'dark',
+    colors: {},
+    tokenColors: [],
+  })),
+  isValidTheme: jest.fn((theme: string) => theme === 'usu-light' || theme === 'usu-dark'),
+  getDefaultTheme: jest.fn((type: 'light' | 'dark') => type === 'light' ? 'usu-light' : 'usu-dark'),
 }));
 
 describe('CodeBlock', () => {
@@ -86,7 +98,31 @@ describe('CodeBlock', () => {
     await waitFor(() => {
       expect(mockCodeToHtml).toHaveBeenCalledWith(
         code,
-        expect.objectContaining({ lang: 'typescript' })
+        expect.objectContaining({ lang: 'typescript', theme: 'usu-light' })
+      );
+    });
+  });
+
+  it('should use custom USU light theme when specified', async () => {
+    const code = 'const x = 1;';
+    render(await CodeBlock({ code, language: 'typescript', theme: 'usu-light' }));
+
+    await waitFor(() => {
+      expect(mockCodeToHtml).toHaveBeenCalledWith(
+        code,
+        expect.objectContaining({ lang: 'typescript', theme: 'usu-light' })
+      );
+    });
+  });
+
+  it('should use custom USU dark theme when specified', async () => {
+    const code = 'const x = 1;';
+    render(await CodeBlock({ code, language: 'typescript', theme: 'usu-dark' }));
+
+    await waitFor(() => {
+      expect(mockCodeToHtml).toHaveBeenCalledWith(
+        code,
+        expect.objectContaining({ lang: 'typescript', theme: 'usu-dark' })
       );
     });
   });

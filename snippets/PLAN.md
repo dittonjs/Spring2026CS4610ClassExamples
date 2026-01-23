@@ -42,6 +42,12 @@ Use **shiki** for syntax highlighting:
 - Works well with Next.js Server Components (no client-side JavaScript needed)
 - Supports a wide range of programming languages
 - Provides high-quality syntax highlighting with theme support
+- **Custom USU Themes**: Two custom themes matching Utah State University brand colors
+  - Light theme: Uses USU primary dark blue (#003366) with light backgrounds
+  - Dark theme: Uses USU dark blue backgrounds with light text
+  - Themes stored as JSON files following shiki theme format
+  - User can toggle between themes via UI switch
+  - Embedded version accepts theme via `?theme=light` or `?theme=dark` query parameter
 
 ### 3. UI Components
 
@@ -50,6 +56,10 @@ Create a clean, readable code display with:
 - Syntax-highlighted code block
 - Copy-to-clipboard functionality (Client Component)
 - Embed code generator (shows iframe code for Canvas LMS)
+- **Theme Toggle Switch**: Client component to switch between light and dark code themes
+  - Toggle visible on snippet page (not in embed mode)
+  - Persists theme preference (localStorage or URL state)
+  - Updates CodeBlock theme dynamically
 - Responsive design using Tailwind CSS
 - Dark mode support (already configured in the project)
 - Error handling UI for invalid base64 or unsupported languages
@@ -207,6 +217,11 @@ Based on Utah State University's brand colors:
 - Include default dimensions (e.g., width="100%" height="400px")
 - Provide copy-to-clipboard functionality for easy sharing
 - Show example usage for Canvas LMS
+- **Dynamic Height Calculation**: Automatically calculate iframe height based on the number of lines of code being embedded
+  - Count the number of lines in the code snippet
+  - Estimate height using a formula that accounts for line height, padding, and header space
+  - Provide a reasonable default height for very short snippets (minimum height)
+  - Ensure the calculated height accommodates the full code block without unnecessary scrolling
 
 ### Layout Optimization
 

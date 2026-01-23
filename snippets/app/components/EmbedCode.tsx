@@ -7,17 +7,30 @@ interface EmbedCodeProps {
   url: string;
   width?: string;
   height?: string;
+  theme?: 'light' | 'dark';
 }
 
 /**
  * EmbedCode component that displays iframe embed code for Canvas LMS.
  * This is a Client Component because it uses interactive features.
  */
-export default function EmbedCode({ url, width = '100%', height = '400px' }: EmbedCodeProps) {
+export default function EmbedCode({ url, width = '100%', height = '400px', theme }: EmbedCodeProps) {
   const [copied, setCopied] = useState(false);
 
-  // Add embed=true to the URL if not already present
-  const embedUrl = url.includes('embed=true') ? url : `${url}${url.includes('?') ? '&' : '?'}embed=true`;
+  // Build URL with query parameters
+  const urlObj = new URL(url, typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+  
+  // Add embed=true if not already present
+  if (!urlObj.searchParams.has('embed')) {
+    urlObj.searchParams.set('embed', 'true');
+  }
+  
+  // Add theme if provided
+  if (theme) {
+    urlObj.searchParams.set('theme', theme);
+  }
+  
+  const embedUrl = urlObj.toString();
 
   // Generate the iframe HTML code
   const iframeCode = `<iframe src="${embedUrl}" width="${width}" height="${height}" frameborder="0" allowfullscreen></iframe>`;

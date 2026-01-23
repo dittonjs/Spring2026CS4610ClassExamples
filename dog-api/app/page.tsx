@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { fetchDogBreeds } from "@/utils/dogapi";
 import SearchableDogList from "./_components/searchable_dog_list";
 

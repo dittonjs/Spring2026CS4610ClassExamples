@@ -96,4 +96,5 @@ describe('EmbedCode', () => {
     expect(iframeCode.value).toContain('width="800px"');
     expect(iframeCode.value).toContain('height="600px"');
   });
+
 });

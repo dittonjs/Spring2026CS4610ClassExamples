@@ -2,6 +2,14 @@ import { render, screen, waitFor } from '@testing-library/react';
 import SnippetPage from '@/app/s/[language]/[base64]/page';
 import { decodeBase64 } from '@/app/_utils/base64';
 
+// Mock next/navigation for ThemeToggle
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+  useSearchParams: () => new URLSearchParams(),
+}));
+
 // Mock the components
 jest.mock('@/app/components/CodeBlock', () => {
   return function MockCodeBlock({ code, language }: { code: string; language: string }) {

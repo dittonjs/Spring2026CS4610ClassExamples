@@ -7,6 +7,7 @@ jest.mock('next/navigation', () => ({
   useRouter: () => ({
     push: jest.fn(),
   }),
+  useSearchParams: () => new URLSearchParams(),
 }));
 
 describe('Home Page', () => {
@@ -18,7 +19,7 @@ describe('Home Page', () => {
   it('should display instructions on how to use the snippet viewer', () => {
     render(<Home />);
     expect(screen.getByText('How It Works')).toBeInTheDocument();
-    expect(screen.getByText(/Paste your code below/i)).toBeInTheDocument();
+    expect(screen.getByText(/Paste your code above/i)).toBeInTheDocument();
   });
 
 
@@ -127,7 +128,7 @@ describe('Home Page', () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText(/embed code/i)).toBeInTheDocument();
+      // Look for the iframe code specifically, not just any "embed code" text
       expect(screen.getByDisplayValue(/<iframe/)).toBeInTheDocument();
     });
   });

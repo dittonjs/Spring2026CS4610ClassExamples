@@ -1,7 +1,10 @@
 import { decodeBase64 } from '@/app/_utils/base64';
+import { calculateIframeHeight } from '@/app/_utils/iframeHeight';
+import { getDefaultTheme, type ThemeName } from '@/app/_utils/themes';
 import CodeBlock from '@/app/components/CodeBlock';
 import CopyButton from '@/app/components/CopyButton';
 import EmbedCode from '@/app/components/EmbedCode';
+import ThemeInitializer from '@/app/components/ThemeInitializer';
 import { headers } from 'next/headers';
 
 interface SnippetPageProps {
@@ -11,6 +14,7 @@ interface SnippetPageProps {
   }>;
   searchParams: Promise<{
     embed?: string;
+    theme?: string;
   }>;
 }
 
@@ -21,8 +25,15 @@ interface SnippetPageProps {
 export default async function SnippetPage({ params, searchParams }: SnippetPageProps) {
   const { language, base64: base64Param } = await params;
   const searchParamsResolved = await searchParams;
-  const { embed } = searchParamsResolved || {};
+  const { embed, theme: themeParam } = searchParamsResolved || {};
   const isEmbedMode = embed === 'true';
+
+  // Determine theme: use query param if provided, otherwise default to light
+  const theme: ThemeName = themeParam === 'dark'
+    ? 'usu-dark'
+    : themeParam === 'light'
+    ? 'usu-light'
+    : getDefaultTheme('light');
 
   // URL-decode the base64 parameter (Next.js may have already decoded it, but we'll decode again to be safe)
   const base64 = decodeURIComponent(base64Param);
@@ -60,13 +71,15 @@ export default async function SnippetPage({ params, searchParams }: SnippetPageP
   }
 
   return (
-    <main
-      className={`min-h-screen ${
-        isEmbedMode
-          ? 'p-2 bg-usu-bg-white dark:bg-usu-dark-bg-secondary'
-          : 'p-8 bg-usu-bg-light dark:bg-usu-dark-bg'
-      }`}
-    >
+    <>
+      <ThemeInitializer theme={theme === 'usu-dark' ? 'dark' : 'light'} />
+      <main
+        className={`min-h-screen ${
+          isEmbedMode
+            ? 'p-2 bg-usu-bg-white dark:bg-usu-dark-bg-secondary'
+            : 'p-8 bg-usu-bg-light dark:bg-usu-dark-bg'
+        }`}
+      >
       <div
         className={`max-w-6xl mx-auto ${
           isEmbedMode ? '' : 'space-y-6'
@@ -96,17 +109,28 @@ export default async function SnippetPage({ params, searchParams }: SnippetPageP
             </span>
             <CopyButton text={code} />
           </div>
-          <div className={isEmbedMode ? 'p-2' : 'p-4'}>
-            <CodeBlock code={code} language={language} />
+          <div className={`${isEmbedMode ? 'p-2' : 'p-4'} bg-usu-bg-soft dark:bg-usu-dark-bg-extra-dark overflow-x-auto`}>
+            {language === 'other' ? (
+              <pre className="font-mono text-sm text-usu-text-dark dark:text-usu-dark-text whitespace-pre overflow-x-auto">
+                <code>{code}</code>
+              </pre>
+            ) : (
+              <CodeBlock code={code} language={language} theme={theme} />
+            )}
           </div>
         </div>
 
         {!isEmbedMode && (
           <div className="bg-usu-bg-white dark:bg-usu-dark-bg-secondary rounded-lg shadow-lg p-6 border border-gray-200 dark:border-usu-dark-border">
-            <EmbedCode url={currentUrl} />
+            <EmbedCode
+              url={currentUrl}
+              height={`${calculateIframeHeight(code)}px`}
+              theme={theme === 'usu-light' ? 'light' : 'dark'}
+            />
           </div>
         )}
       </div>
     </main>
+    </>
   );
 }
