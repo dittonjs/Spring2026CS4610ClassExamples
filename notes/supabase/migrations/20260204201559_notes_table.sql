@@ -3,16 +3,23 @@
     "id" uuid not null default gen_random_uuid(),
     "title" text not null,
     "content" text not null,
+    "user_id" uuid not null,
     "created_at" timestamp with time zone default CURRENT_TIMESTAMP,
     "updated_at" timestamp with time zone default CURRENT_TIMESTAMP
       );
 
+
+alter table "public"."notes" enable row level security;
 
 CREATE INDEX idx_notes_created_at ON public.notes USING btree (created_at);
 
 CREATE UNIQUE INDEX notes_pkey ON public.notes USING btree (id);
 
 alter table "public"."notes" add constraint "notes_pkey" PRIMARY KEY using index "notes_pkey";
+
+alter table "public"."notes" add constraint "notes_user_id_fkey" FOREIGN KEY (user_id) REFERENCES auth.users(id) not valid;
+
+alter table "public"."notes" validate constraint "notes_user_id_fkey";
 
 grant delete on table "public"."notes" to "anon";
 
@@ -55,5 +62,14 @@ grant trigger on table "public"."notes" to "service_role";
 grant truncate on table "public"."notes" to "service_role";
 
 grant update on table "public"."notes" to "service_role";
+
+
+  create policy "Allow users to view their own notes"
+  on "public"."notes"
+  as permissive
+  for select
+  to authenticated
+using ((user_id = ( SELECT auth.uid() AS uid)));
+
 
 

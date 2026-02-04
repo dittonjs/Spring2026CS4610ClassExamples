@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { getNotes, type Note } from "@/utils/notes";
+import { getUser } from "@/utils/auth";
+import { LogoutButton } from "@/app/components/LogoutButton";
 
 export default async function Home() {
   const { data: notes, error } = await getNotes();
+  const { user } = await getUser();
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -20,12 +23,34 @@ export default async function Home() {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Notes App</h1>
-          <Link
-            href="/new_note"
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-          >
-            + New Note
-          </Link>
+          <div className="flex gap-3">
+            {user ? (
+              <>
+                <LogoutButton />
+                <Link
+                  href="/new_note"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                >
+                  + New Note
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/auth/signin"
+                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800 transition-colors"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/auth/signup"
+                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800 transition-colors"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+          </div>
         </div>
 
         {error && (

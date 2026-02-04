@@ -1,1 +1,2 @@
-select * from notes;
+SELECT * from auth.users;
+
