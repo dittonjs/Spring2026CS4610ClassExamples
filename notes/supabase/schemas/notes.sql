@@ -1,0 +1,11 @@
+CREATE TABLE notes (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_notes_created_at ON notes (created_at);
+
+ALTER TABLE notes ENABLE ROW LEVEL SECURITY;
