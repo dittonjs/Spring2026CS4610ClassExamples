@@ -3,6 +3,7 @@ CREATE TABLE notes (
     title TEXT NOT NULL,
     content TEXT NOT NULL,
     user_id UUID NOT NULL REFERENCES auth.users(id),
+    file_url TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

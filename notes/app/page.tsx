@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getNotes, type Note } from "@/utils/notes";
 import { getUser } from "@/utils/auth";
-import { LogoutButton } from "@/app/components/LogoutButton";
+import { LogoutButton } from "@/app/_components/LogoutButton";
+import { FileLink } from "./_components/FileLink";
 
 export default async function Home() {
   const { data: notes, error } = await getNotes();
@@ -87,6 +88,9 @@ export default async function Home() {
                 <p className="text-sm text-gray-500 dark:text-gray-500">
                   {formatDate(note.created_at)}
                 </p>
+                {note.file_url && <p className="text-sm text-gray-500 dark:text-gray-500">
+                  <FileLink filePath={note.file_url} />
+                </p>}
               </div>
             ))}
           </div>

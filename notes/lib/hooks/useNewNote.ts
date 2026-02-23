@@ -8,13 +8,14 @@ export const useNewNote = () => {
   const [content, setContent] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [noteFile, setNoteFile] = useState<File | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
     setIsSubmitting(true)
 
-    const { error: createError } = await createNote(title, content)
+    const { error: createError } = await createNote(title, content, noteFile)
 
     if (createError) {
       setError(createError.message)
@@ -26,5 +27,17 @@ export const useNewNote = () => {
     router.push('/')
   }
 
-  return { title, content, isSubmitting, error, setTitle, setContent, setIsSubmitting, setError, handleSubmit }
+  return {
+    title,
+    content,
+    isSubmitting,
+    error,
+    noteFile,
+    setTitle,
+    setContent,
+    setIsSubmitting,
+    setError,
+    handleSubmit,
+    setNoteFile
+  }
 }

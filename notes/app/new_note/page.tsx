@@ -11,8 +11,18 @@ export default function NewNotePage() {
     error,
     setTitle,
     setContent,
-    handleSubmit
+    handleSubmit,
+    setNoteFile
   } = useNewNote()
+
+
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setNoteFile(file)
+    }
+  }
 
   return (
     <div className="min-h-screen p-8">
@@ -65,6 +75,11 @@ export default function NewNotePage() {
               placeholder="Enter note content..."
               disabled={isSubmitting}
             />
+          </div>
+
+          <div>
+            <label htmlFor="file">Note File</label>
+            <input type="file" id="file" onChange={handleFileChange} />
           </div>
 
           {error && (
