@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { io } from 'socket.io-client'
 import './App.css'
 
-const SOCKET_URL = 'http://localhost:3000'
+const SOCKET_URL = 'https://usu-4610-socket-server-35ce51c3c6d2.herokuapp.com/'
 
 interface ChatMessage {
   id: string
