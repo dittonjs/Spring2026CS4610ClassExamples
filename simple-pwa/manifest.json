@@ -1,0 +1,19 @@
+{
+  "short_name": "MY PWA",
+  "name": "My Tiny PWA",
+  "icons": [
+    {
+      "sizes": "192x192",
+      "src": "/192.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "512x512",
+      "src": "/512.png",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "description": "A simple progressive web application"
+}

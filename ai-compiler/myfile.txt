@@ -1,0 +1,12 @@
+dog class
+  a constructor that create a dog with a name and a age
+
+  speak method: prints "hello" + the dogs name
+
+  rollOver method prints dog name rolled over
+
+
+if main
+  create dog
+  call speak
+  call rollOver

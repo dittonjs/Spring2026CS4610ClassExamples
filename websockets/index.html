@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    WebAssembly.instantiateStreaming(fetch("test.wasm"), {
+      io: {
+        print: (arg) => console.log(arg)
+      }
+    }).then((obj) => {
+      const result = obj.instance.exports.fib(40)
+      console.log(result);
+    });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
